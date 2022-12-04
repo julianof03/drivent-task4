@@ -85,13 +85,13 @@ async function postBooking(userId: number, roomId: number) {
 }
 async function putBooking(userId: number, roomId: number, bookingId: number) {
   await putlistboking(userId, roomId, bookingId);
-  // const repositoryBooking = await bookingRepository.createBooking(userId, roomId);
+  const repositoryBooking = await bookingRepository.createBooking(userId, roomId);
 
-  // if (!repositoryBooking) {
-  //   throw notFoundError();
-  // } 
+  if (!repositoryBooking) {
+    throw notFoundError();
+  } 
   const booking = {
-    bookingId: 10
+    bookingId: repositoryBooking.id
   };
   return booking;
 }
