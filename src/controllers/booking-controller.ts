@@ -10,10 +10,7 @@ export async function getBooking(req: AuthenticatedRequest, res: Response) {
     const booking = await bookingService.getBooking(Number(userId));
     return res.status(httpStatus.OK).send(booking);
   } catch (error) {
-    if (error.name === "NotFoundError") {
-      return res.sendStatus(httpStatus.NOT_FOUND);
-    }
-    return res.sendStatus(httpStatus.PAYMENT_REQUIRED);
+    if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
 
@@ -28,7 +25,6 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
   } catch (error) {
     if (error.name === "businessRuleError") return res.sendStatus(httpStatus.FORBIDDEN);
     if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
-    return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
 export async function putBooking(req: AuthenticatedRequest, res: Response) {
@@ -42,7 +38,5 @@ export async function putBooking(req: AuthenticatedRequest, res: Response) {
     return res.status(httpStatus.OK).send(booking);
   } catch (error) {
     if (error.name === "businessRuleError") return res.sendStatus(httpStatus.FORBIDDEN);
-    if (error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
-    return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }

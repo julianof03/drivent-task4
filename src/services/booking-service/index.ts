@@ -13,7 +13,7 @@ async function listboking(userId: number, roomId: number) {
   if (!enrollment) {
     throw notFoundError();
   }
-  //Tem ticket pago isOnline false e includesHotel true
+
   const ticket = await ticketRepository.findTicketByEnrollmentId(enrollment.id);
 
   if (!ticket || ticket.status === "RESERVED" || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
@@ -24,33 +24,16 @@ async function listboking(userId: number, roomId: number) {
   if(booking) {
     throw businessRuleError();
   } 
+  const room = await bookingRepository.findRoomsByRoomId(roomId);
+  if(!room) throw notFoundError(); 
 }
 
-async function putlistboking(userId: number, roomId: number, bookingId: number) {
+async function putlistboking(roomId: number) {
   if(roomId < 1) {
     throw businessRuleError();
   }
-
   const room = await bookingRepository.findRoomsByRoomId(roomId);
-  if(!room) {
-    throw notFoundError();
-  }
-
-  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
-  if (!enrollment) {
-    throw notFoundError();
-  }
-  //Tem ticket pago isOnline false e includesHotel true
-  const ticket = await ticketRepository.findTicketByEnrollmentId(enrollment.id);
-
-  if (!ticket || ticket.status === "RESERVED" || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
-    throw businessRuleError();
-  }
-
-  const booking = await bookingRepository.findbookingByRoomId(roomId);
-  if(booking) {
-    throw businessRuleError();
-  } 
+  if(!room) throw notFoundError(); 
 }
 
 async function getBooking(userId: number) {
@@ -83,13 +66,12 @@ async function postBooking(userId: number, roomId: number) {
   };
   return booking;
 }
+
 async function putBooking(userId: number, roomId: number, bookingId: number) {
-  await putlistboking(userId, roomId, bookingId);
+  await putlistboking(roomId);
+  await listboking(userId, roomId);
   const repositoryBooking = await bookingRepository.createBooking(userId, roomId);
 
-  if (!repositoryBooking) {
-    throw notFoundError();
-  } 
   const booking = {
     bookingId: repositoryBooking.id
   };

@@ -185,13 +185,6 @@ describe("post /booking", () => {
     it("should respond with status 404 for invalid room id", async () => {
       const user = await createUser();
       const token = await generateValidToken(user);
-      
-      const enrollment = await createEnrollmentWithAddress(user);
-      const ticketType = await createTicketTypeWithHotel();
-      const ticket = await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-      const payment = await createPayment(ticket.id, ticketType.price);  
-  
-      const createdHotel = await createHotel();
       const body = {
         roomId: 1
       };

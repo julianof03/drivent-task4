@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.85% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/28</span>
+                <span class='fraction'>22/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.85% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/28</span>
+                <span class='fraction'>22/28</span>
             </div>
         
             
@@ -136,35 +136,35 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AuthenticatedRequest } from "@/middlewares";
@@ -187,10 +187,10 @@ export async function getPaymentByTicketId(req: AuthenticatedRequest, res: Respo
     }
 <span class="cstat-no" title="statement not covered" >    return res.status(httpStatus.OK).send(payment);</span>
   } catch (error) {
-    if (error.name === "UnauthorizedError") {
-      return res.sendStatus(httpStatus.UNAUTHORIZED);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (error.name === "UnauthorizedError") {
+<span class="cstat-no" title="statement not covered" >      return res.sendStatus(httpStatus.UNAUTHORIZED);</span>
     }
-<span class="cstat-no" title="statement not covered" >    return res.sendStatus(httpStatus.NOT_FOUND);</span>
+    return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
 &nbsp;
@@ -202,8 +202,8 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
       cardData,
     } = req.body;
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!ticketId || !cardData) {
-<span class="cstat-no" title="statement not covered" >      return res.sendStatus(httpStatus.BAD_REQUEST);</span>
+    if (!ticketId || !cardData) {
+      return res.sendStatus(httpStatus.BAD_REQUEST);
     }
     const payment = await paymentService.paymentProcess(ticketId, userId, cardData);
 &nbsp;
@@ -213,10 +213,10 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
 &nbsp;
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (error.name === "UnauthorizedError") {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (error.name === "UnauthorizedError") {
 <span class="cstat-no" title="statement not covered" >      return res.sendStatus(httpStatus.UNAUTHORIZED);</span>
     }
-<span class="cstat-no" title="statement not covered" >    return res.sendStatus(httpStatus.NOT_FOUND);</span>
+    return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -226,7 +226,7 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun Dec 04 2022 20:37:25 GMT-0300 (Brasilia Standard Time)
+                at Sun Dec 04 2022 21:41:21 GMT-0300 (Brasilia Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
